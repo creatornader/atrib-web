@@ -74,10 +74,20 @@ export interface ExampleSnippet {
   protocol: Protocol
 }
 
+export interface FrameworkSnippet {
+  code: string
+  language: string
+  framework: Framework
+}
+
 /**
  * Build the integration snippet for a given framework × protocol cell.
  * Returns the framework's setup code with a protocol-specific comment
  * line appended so the user sees what's recognized for free.
+ *
+ * Kept for any caller that still wants the per-cell rendering. The
+ * landing-page Matrix component pins by framework only and uses
+ * frameworkExample() instead.
  */
 export function exampleFor(framework: Framework, protocol: Protocol): ExampleSnippet {
   const base = FRAMEWORK_SNIPPETS[framework]
@@ -87,5 +97,19 @@ export function exampleFor(framework: Framework, protocol: Protocol): ExampleSni
     language: "ts",
     framework,
     protocol,
+  }
+}
+
+/**
+ * Build the framework-only integration snippet. Used by the Matrix
+ * when a row is pinned. No protocol comment is appended because the
+ * point of pinning the row is to show that the protocol axis is
+ * auto-detected at runtime, not configured per-cell.
+ */
+export function frameworkExample(framework: Framework): FrameworkSnippet {
+  return {
+    code: FRAMEWORK_SNIPPETS[framework],
+    language: "ts",
+    framework,
   }
 }
