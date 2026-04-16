@@ -116,11 +116,44 @@ export function LayerLoop() {
             One layer, three primitives,
             <br className="hidden sm:block" /> an open loop.
           </h2>
-          <p className="mt-4 font-sans text-base leading-relaxed text-[var(--color-muted-foreground)]">
-            atrib sits between the agents that act and the systems that read
-            those actions. Everything on the top plugs in through one package.
-            Everything on the bottom comes back around.
-          </p>
+          {/* Intro structure:
+                L1 = thesis statement (atrib's spatial position)
+                L2 + L3 = the two halves of the diagram explained, with
+                          accent arrows that visually mirror the spatial
+                          axis the sentences describe. The arrows do the
+                          spatial-marker work before the language confirms
+                          it, the same trick the kicker labels use
+                          elsewhere on the page. */}
+          <div className="mt-4 font-sans text-base leading-relaxed text-[var(--color-muted-foreground)]">
+            <p>
+              atrib sits between the agents that act and the systems that
+              read those actions.
+            </p>
+            <div className="mt-4 space-y-2">
+              <p className="flex items-baseline gap-2.5">
+                <span
+                  aria-hidden="true"
+                  className="font-mono text-[var(--color-accent)]"
+                >
+                  ↑
+                </span>
+                <span>
+                  Everything on the top plugs in through one package.
+                </span>
+              </p>
+              <p className="flex items-baseline gap-2.5">
+                <span
+                  aria-hidden="true"
+                  className="font-mono text-[var(--color-accent)]"
+                >
+                  ↓
+                </span>
+                <span>
+                  Everything on the bottom chains into the next pass.
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Diagram */}
@@ -208,52 +241,35 @@ export function LayerLoop() {
               </div>
             </div>
 
-            {/* Mobile: stacked vertically. Card, exchange, card. Flow
-                arrow under each card. */}
-            <div className="flex flex-col items-center gap-3 sm:hidden">
-              <InputActorCard
-                actor={INPUT_ACTORS[0]}
-                role="agent"
-                sdkName="@atrib/agent"
-                onEnter={() => setHoveredInput("agent")}
-                onLeave={() => setHoveredInput(null)}
-                active={hoveredInput === "agent"}
-                dimmed={hoveredInput === "tool"}
-              />
-              <FlowArrow
-                label="invokes"
-                active={hoveredInput === "agent"}
-                dimmed={hoveredInput === "tool"}
-              />
-              <div
-                aria-hidden="true"
-                className="flex items-center gap-3 py-2"
-              >
-                <ExchangeArrow
-                  label="calls"
-                  direction="down"
-                  tone="neutral"
+            {/* Mobile: a single "duo card" with the two actors as
+                horizontal halves separated by a hairline. The desktop
+                idiom (peer cards side-by-side with horizontal exchange
+                arrows + two converging beams) does not translate to
+                vertical space, so mobile uses a different composition:
+                one container = two halves of the same thing, plus one
+                beam from the container down into atrib. The hover-path
+                interaction is dropped (no hover on touch, and the
+                highlight-the-other-side mechanic loses meaning when
+                there is only one card). */}
+            <div className="flex w-full max-w-md flex-col items-center gap-3 sm:hidden">
+              <div className="w-full overflow-hidden rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-background)]">
+                <ActorRow
+                  actor={INPUT_ACTORS[0]}
+                  sdkName="@atrib/agent"
                 />
-                <ExchangeArrow
-                  label="signed response"
-                  direction="up"
-                  tone="accent"
+                <div
+                  aria-hidden="true"
+                  className="border-t hairline"
+                />
+                <ActorRow
+                  actor={INPUT_ACTORS[1]}
+                  sdkName="@atrib/mcp"
                 />
               </div>
-              <InputActorCard
-                actor={INPUT_ACTORS[1]}
-                role="tool"
-                sdkName="@atrib/mcp"
-                onEnter={() => setHoveredInput("tool")}
-                onLeave={() => setHoveredInput(null)}
-                active={hoveredInput === "tool"}
-                dimmed={hoveredInput === "agent"}
-              />
-              <FlowArrow
-                label="signs"
-                active={hoveredInput === "tool"}
-                dimmed={hoveredInput === "agent"}
-              />
+              {/* One beam down to atrib. Label kept generic ("signs")
+                  since both halves above produce signed records to the
+                  atrib log via their respective SDKs. */}
+              <FlowArrow label="signs" active={false} dimmed={false} />
             </div>
           </div>
 
@@ -901,6 +917,47 @@ function InputActorCard({
         />
         {sdkName}
       </span>
+    </div>
+  )
+}
+
+/** Mobile-only horizontal actor row. Used as one half of the duo card
+ *  that replaces the desktop's side-by-side InputActorCard pair on
+ *  narrow viewports. Layout: icon on the left, label + caption + SDK
+ *  pill on the right. No hover/focus interaction (touch viewport). */
+function ActorRow({
+  actor,
+  sdkName,
+}: {
+  actor: InputActor
+  sdkName: string
+}) {
+  return (
+    <div className="flex items-start gap-3 p-4">
+      <div
+        aria-hidden="true"
+        className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg border border-[var(--color-border-strong)] surface-raised text-[var(--color-foreground)]"
+      >
+        {actor.icon}
+      </div>
+      <div className="min-w-0 flex-1">
+        {/* Name on its own row. Pill always wraps below the name (not
+            inline) so the two halves of the duo card read as parallel
+            even though the labels have different lengths. */}
+        <div className="font-sans text-base font-medium text-[var(--color-foreground)]">
+          {actor.label}
+        </div>
+        <span className="mt-1.5 inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-background)] px-2 py-0.5 font-mono text-[10px] text-[var(--color-accent)]">
+          <span
+            aria-hidden="true"
+            className="h-1 w-1 rounded-full bg-[var(--color-muted)]"
+          />
+          {sdkName}
+        </span>
+        <div className="mt-1.5 whitespace-pre-line font-mono text-xs leading-relaxed text-[var(--color-muted)]">
+          {actor.caption}
+        </div>
+      </div>
     </div>
   )
 }
