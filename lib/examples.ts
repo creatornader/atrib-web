@@ -1,17 +1,15 @@
 /**
- * Concise integration examples for each framework × payment-protocol cell.
+ * Concise integration examples per framework.
  *
  * Shape of the truth:
  *   - The **framework** determines the wrapper call (which adapter from
- *     @atrib/agent or @atrib/mcp you use).
+ *     @atrib/agent or @atrib/mcp you use). This is what the user writes.
  *   - The **payment protocol** is auto-detected at runtime by @atrib/agent's
- *     transaction detector, so no user code changes per protocol. We still
- *     annotate the snippet with a short comment that names what's being
- *     recognized on the response, because that's the "aha" moment:
- *     you didn't write the protocol code, atrib picks it up.
+ *     transaction detector, so no user code changes per protocol. The
+ *     landing-page Matrix pins by row (framework) for this reason.
  */
 
-import type { Framework, Protocol } from "./data"
+import type { Framework } from "./data"
 
 /** Per-framework integration snippet. The variable parts users would edit
  *  are kept obvious. Each snippet fits in 8 lines or fewer. */
@@ -57,47 +55,10 @@ const interceptor = atrib({ creatorKey: process.env.ATRIB_PRIVATE_KEY })
 const client = wrapMcpClient(mastraClient, interceptor)`,
 }
 
-/** Per-protocol auto-detection note. Appended as a trailing comment line. */
-const PROTOCOL_NOTES: Record<Protocol, string> = {
-  ACP: "ACP charge responses auto-detected on tool returns.",
-  UCP: "UCP settlement receipts auto-detected on tool returns.",
-  x402: "x402 HTTP 402 responses auto-detected on tool returns.",
-  MPP: "MPP tool-call receipts auto-detected on tool returns.",
-  AP2: "AP2 agent-payment envelopes auto-detected on tool returns.",
-  "a2a-x402": "A2A-x402 hybrid payments auto-detected on tool returns.",
-}
-
-export interface ExampleSnippet {
-  code: string
-  language: string
-  framework: Framework
-  protocol: Protocol
-}
-
 export interface FrameworkSnippet {
   code: string
   language: string
   framework: Framework
-}
-
-/**
- * Build the integration snippet for a given framework × protocol cell.
- * Returns the framework's setup code with a protocol-specific comment
- * line appended so the user sees what's recognized for free.
- *
- * Kept for any caller that still wants the per-cell rendering. The
- * landing-page Matrix component pins by framework only and uses
- * frameworkExample() instead.
- */
-export function exampleFor(framework: Framework, protocol: Protocol): ExampleSnippet {
-  const base = FRAMEWORK_SNIPPETS[framework]
-  const note = PROTOCOL_NOTES[protocol]
-  return {
-    code: `${base}\n\n// ${note}`,
-    language: "ts",
-    framework,
-    protocol,
-  }
 }
 
 /**
