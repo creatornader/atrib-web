@@ -36,6 +36,21 @@ export const metadata: Metadata = {
   description:
     "An open protocol for cryptographic attribution of AI agent actions. Signatures, chains, receipts for the agent economy.",
   metadataBase: new URL("https://atrib.dev"),
+  // Explicit icons override Next.js's auto-generated link tags so we
+  // get clean URLs without the `?<hash>` cache-busting query strings
+  // that Next.js appends by default. Some clients (notably iOS Safari)
+  // have been reported to mishandle icon URLs with query strings,
+  // showing a generic globe icon instead of the actual favicon. The
+  // files referenced here exist at app/favicon.ico, app/icon.svg, and
+  // public/apple-touch-icon.png.
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180" },
+    shortcut: "/favicon.ico",
+  },
   openGraph: {
     title: "atrib",
     description: "Live signatures for every agent action.",
