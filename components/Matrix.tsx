@@ -133,8 +133,9 @@ export function Matrix() {
           ref={gridRef}
         >
           <div
-            role="table"
+            role="grid"
             aria-label="Coverage matrix of agent frameworks and payment protocols"
+            aria-multiselectable="false"
             className="inline-block min-w-full"
           >
             {/* Column header row */}
@@ -214,11 +215,11 @@ export function Matrix() {
                         <button
                           type="button"
                           key={col}
-                          role="cell"
+                          role="gridcell"
                           data-cell={id}
                           data-lit={dataLit}
                           aria-label={`${row} × ${col}${isPinned ? ", selected" : ""}`}
-                          aria-pressed={isPinned}
+                          aria-selected={isPinned}
                           onClick={() => handleCellClick(id)}
                           className={`
                             matrix-cell relative flex items-center justify-center
