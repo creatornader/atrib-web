@@ -39,7 +39,7 @@ export function Thesis() {
           <p className="font-sans text-base leading-relaxed text-[var(--color-muted-foreground)] sm:text-lg sm:leading-[1.7]">
             Most MCP servers ship without good visibility into who calls them
             or how.{" "}
-            <code className="rounded bg-[var(--color-surface)] px-1.5 py-0.5 font-mono text-[0.92em] text-[var(--color-foreground)]">
+            <code className="rounded border border-[var(--color-border-strong)] bg-[var(--color-surface-raised)] px-1.5 py-0.5 font-mono text-[0.92em] text-[var(--color-foreground)]">
               server.use(atrib())
             </code>{" "}
             adds one line of middleware that produces a signed receipt for

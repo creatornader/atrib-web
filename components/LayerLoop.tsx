@@ -91,7 +91,7 @@ const PRIMITIVES = [
   {
     name: "Receipt",
     body:
-      "Every chain, readable by anyone. Settled against a policy, with sensible defaults and one-env-var overrides.",
+      "Every chain, readable by anyone. Settled against a policy, with sensible defaults and single env-var overrides.",
   },
 ] as const
 

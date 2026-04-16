@@ -41,7 +41,7 @@ export function Hero() {
             "One", "Any", "any" land in foreground to reinforce the
             install promise + compatibility claim at a glance. */}
         <div className="mt-6 max-w-xl space-y-3 font-sans text-base leading-relaxed text-[var(--color-muted-foreground)] sm:text-lg">
-          <p>The signing layer for the agent economy.</p>
+          <p>The provenance layer for the agent economy.</p>
           <p>
             <span className="text-[var(--color-foreground)]">One</span> line of
             code.

@@ -60,6 +60,43 @@ export function Standards() {
             Each of these is open and standard. atrib is the protocol that
             wires them into receipts anyone can verify.
           </p>
+
+          {/* The full chain: exact operations + specs, end-to-end, so the
+              page isn't hand-wavy about the cryptography. Numbered steps
+              mirror spec §1 (record + signing) and §2 (Merkle log).
+              Verification line at the bottom makes the "don't trust atrib"
+              claim concrete by naming the three independent checks. */}
+          <div className="mt-6 max-w-2xl">
+            <p className="mb-3 flex items-center gap-2">
+              <span
+                aria-hidden="true"
+                className="h-1 w-1 rounded-full bg-[var(--color-accent)]"
+              />
+              <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-accent)]">
+                The full chain
+              </span>
+            </p>
+            <ol className="space-y-2 font-sans text-sm leading-relaxed text-[var(--color-muted-foreground)]">
+              {[
+                "Ed25519 signature (RFC 8032) over JCS-canonicalized JSON (RFC 8785).",
+                "Record hash committed to an append-only Merkle log (RFC 6962).",
+                "Log served via C2SP tlog-tiles, state signed as C2SP tlog-checkpoints.",
+                "Each record bound to the agent's OpenTelemetry trace via its W3C Trace Context trace-id.",
+              ].map((step, i) => (
+                <li key={i} className="flex gap-3">
+                  <span className="mt-0.5 flex-shrink-0 font-mono text-[11px] text-[var(--color-accent)]">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-4 font-sans text-sm italic leading-relaxed text-[var(--color-muted-foreground)]">
+              Verifying a record runs three independent cryptographic checks:
+              signature validity, Merkle inclusion proof, and checkpoint
+              signature. None require trusting atrib.
+            </p>
+          </div>
         </div>
 
         {/* Proof + CTA split */}
