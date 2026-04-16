@@ -7,6 +7,10 @@
     {
       "source": "/apple-icon",
       "headers": [{ "key": "Content-Type", "value": "image/png" }]
+    },
+    {
+      "source": "/icon",
+      "headers": [{ "key": "Content-Type", "value": "image/png" }]
     }
   ]
 }
