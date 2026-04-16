@@ -1,4 +1,18 @@
 {
+  "rewrites": [
+    {
+      "source": "/favicon.ico",
+      "destination": "/icon"
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "destination": "/apple-icon"
+    },
+    {
+      "source": "/apple-touch-icon-precomposed.png",
+      "destination": "/apple-icon"
+    }
+  ],
   "headers": [
     {
       "source": "/opengraph-image",
@@ -10,6 +24,18 @@
     },
     {
       "source": "/icon",
+      "headers": [{ "key": "Content-Type", "value": "image/png" }]
+    },
+    {
+      "source": "/favicon.ico",
+      "headers": [{ "key": "Content-Type", "value": "image/png" }]
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "headers": [{ "key": "Content-Type", "value": "image/png" }]
+    },
+    {
+      "source": "/apple-touch-icon-precomposed.png",
       "headers": [{ "key": "Content-Type", "value": "image/png" }]
     }
   ]
