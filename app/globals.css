@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette: dark-first, warm off-white instead of stark white. */
+  --color-background: #0a0a0a;
+  --color-surface: #131210;
+  --color-surface-raised: #1c1a17;
+  --color-foreground: #f5f4ee;
+  --color-muted: #7d7a72;
+  --color-muted-foreground: #b8b5ac;
+  --color-border: #2d2a25;
+  --color-border-strong: #423e36;
+  --color-accent: #e8a04f;
+  --color-accent-dim: rgba(232, 160, 79, 0.12);
+  --color-accent-faint: rgba(232, 160, 79, 0.05);
+
+  /* Font stacks wired to next/font CSS variables */
+  --font-sans:
+    var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+}
+
+html {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "cv01", "cv11", "ss01";
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-background);
+}
+
+/* Respect reduced-motion preferences globally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Borders, visible enough to read as separations, still dark enough
+   to stay understated in the overall palette. */
+.hairline {
+  border-color: var(--color-border);
+}
+.hairline-strong {
+  border-color: var(--color-border-strong);
+}
+
+/* Surfaces, one step above background for cards, two steps for
+   elevated card headers. Gives the page physical depth without
+   leaving the near-black family. */
+.surface {
+  background-color: var(--color-surface);
+}
+.surface-raised {
+  background-color: var(--color-surface-raised);
+}
+
+/* Hero glow: a soft radial wash from the top-center using the accent
+   color at very low alpha. Carries warmth without reading as marketing. */
+.hero-glow {
+  position: relative;
+  isolation: isolate;
+}
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 50% -5%,
+      var(--color-accent-dim) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 40% 30% at 50% 15%,
+      var(--color-accent-faint) 0%,
+      transparent 65%
+    );
+  pointer-events: none;
+}
+
+/* Grid backdrop, a faint dotted field used behind sections that
+   want to read as a substrate (the matrix and the diagram). */
+.grid-backdrop {
+  background-image:
+    radial-gradient(circle, var(--color-border) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+}
+
+/* Accent kicker, the small monospace label above section headings.
+   Uses the amber accent at full strength so it reads as a signal. */
+.kicker {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Accent-underline heading helper: a 2px amber underline below the
+   kicker that sells the "section starts here" moment. */
+.kicker-rule {
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background-color: var(--color-accent);
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+/* Marching-dashes animation, shared by all diagram flow lines.
+   Global so it's available wherever a `.flow-dash` class appears. */
+.flow-dash {
+  stroke-dashoffset: 0;
+  animation: flow-march 1.2s linear infinite;
+}
+.flow-dash-reverse {
+  animation-direction: reverse;
+}
+@keyframes flow-march {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-dash,
+  .flow-dash-reverse {
+    animation: none !important;
+  }
+}
