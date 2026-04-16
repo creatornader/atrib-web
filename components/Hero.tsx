@@ -46,7 +46,7 @@ export function Hero() {
             <span className="text-[var(--color-foreground)]">One</span> line of
             code.
             <br />
-            <span className="text-[var(--color-foreground)]">Any</span>{" "}
+            <span className="text-[var(--color-foreground)]">Any</span> agent
             framework,{" "}
             <span className="text-[var(--color-foreground)]">any</span> payment
             rail.
