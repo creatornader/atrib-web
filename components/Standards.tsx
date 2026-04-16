@@ -11,7 +11,7 @@ const PROOF_POINTS = [
   },
   {
     title: "Zero custom crypto",
-    body: "Ed25519, JCS, SHA-256, RFC 6962 Merkle trees. No invented primitives.",
+    body: "No invented primitives (Ed25519, SHA-256, JCS, RFC 6962). No hand-rolled crypto (@noble, canonicalize, Tessera). Wycheproof test vectors validated on every build.",
   },
   {
     title: "Works with what you use",
