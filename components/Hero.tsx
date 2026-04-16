@@ -37,11 +37,21 @@ export function Hero() {
           </span>
         </h1>
 
-        {/* TODO(copy): hero sub-line, user authors final wording */}
-        <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-[var(--color-muted-foreground)] sm:text-lg">
-          An open protocol for cryptographic attribution of AI agent actions.
-          One line of code, any framework, any payment rail.
-        </p>
+        {/* Sub-line: lead sentence in muted, then a 2-line block where
+            "One", "Any", "any" land in foreground to reinforce the
+            install promise + compatibility claim at a glance. */}
+        <div className="mt-6 max-w-xl space-y-3 font-sans text-base leading-relaxed text-[var(--color-muted-foreground)] sm:text-lg">
+          <p>The signing layer for the agent economy.</p>
+          <p>
+            <span className="text-[var(--color-foreground)]">One</span> line of
+            code.
+            <br />
+            <span className="text-[var(--color-foreground)]">Any</span>{" "}
+            framework,{" "}
+            <span className="text-[var(--color-foreground)]">any</span> payment
+            rail.
+          </p>
+        </div>
 
         {/* Install code block */}
         <div className="mt-10 max-w-2xl">

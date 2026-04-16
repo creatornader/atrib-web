@@ -51,13 +51,14 @@ export function Standards() {
               </div>
             ))}
           </div>
-          {/* TODO(copy): user authors one short line. Shape:
-              "atrib doesn't invent cryptography, it builds on the
-              primitives the rest of the internet already trusts." */}
+          {/* Framing line: gestures back at the standards strip above
+              ("each of these"), names atrib's role (the protocol that
+              wires them), names the user-side benefit (verifiable
+              receipts). Replaces an earlier defensive phrasing that
+              led with what atrib doesn't do. */}
           <p className="mt-6 max-w-2xl font-sans text-sm leading-relaxed text-[var(--color-muted-foreground)]">
-            atrib doesn&apos;t invent cryptography. It builds on the primitives
-            the rest of the internet already trusts, and reuses the trace layer
-            developers already run.
+            Each of these is open and standard. atrib is the protocol that
+            wires them into receipts anyone can verify.
           </p>
         </div>
 

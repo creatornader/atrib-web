@@ -1,10 +1,14 @@
 /**
- * Thesis section, ~40-60 word paragraph describing why atrib exists.
- * Copy here is a scaffold placeholder; user authors the final wording.
+ * Thesis section. Two paragraphs at different scales of resolution:
  *
- * Register: understated, warm, forward-looking. Plants the flag that
- * atrib sits *in* agent-to-payment flows as rails, not beside them as
- * an after-the-fact audit tool. Does not overclaim market readiness.
+ *   P1: world-level picture. Names the transaction (agent calling tool),
+ *       names the stakeholders, names atrib's position. Two-tone
+ *       treatment: opening sentence in foreground, continuation muted.
+ *
+ *   P2: builder-level picture. Same section, second beat. Set off by
+ *       spacing + subtle left rule + slightly smaller all-muted text so
+ *       it reads as the concrete elaboration of the abstract claim
+ *       above, without becoming a callout box or blockquote.
  */
 export function Thesis() {
   return (
@@ -20,20 +24,33 @@ export function Thesis() {
           Why atrib exists
         </h2>
 
-        {/* TODO(copy): user authors this paragraph. The shape is:
-            one sentence naming the present (agents are taking real actions),
-            one sentence threading the near-future (real money starts moving),
-            one sentence naming atrib's place in that flow. */}
+        {/* P1: world-level. */}
         <p className="font-sans text-xl leading-[1.55] text-[var(--color-foreground)] sm:text-2xl sm:leading-[1.5]">
-          Agents are starting to take real actions, move real data, and soon
-          move real money.{" "}
+          Every time an agent calls a tool, something happens that someone
+          (a buyer, a seller, an auditor) needs to record, bill for, or
+          prove.{" "}
           <span className="text-[var(--color-muted-foreground)]">
-            When that happens, the question of what actually happened, and who
-            caused it, stops being a research topic and starts being an
-            accounting one. atrib is the layer that answers it with
-            cryptography, not promises.
+            Today, no protocol does that. atrib is the missing layer.
           </span>
         </p>
+
+        {/* P2: builder-level. Subtle left rule + smaller muted text. */}
+        <div className="mt-10 border-l hairline pl-6 sm:mt-12 sm:pl-8">
+          <p className="font-sans text-base leading-relaxed text-[var(--color-muted-foreground)] sm:text-lg sm:leading-[1.7]">
+            Most MCP servers ship without good visibility into who calls them
+            or how.{" "}
+            <code className="rounded bg-[var(--color-surface)] px-1.5 py-0.5 font-mono text-[0.92em] text-[var(--color-foreground)]">
+              server.use(atrib())
+            </code>{" "}
+            adds one line of middleware that produces a signed receipt for
+            every response: caller, request, payload, signature. Each receipt
+            links to the call that triggered it, forming a chain of agent
+            activity rather than a flat log of hits. You can see how your tool
+            fits into the larger flow and prove what you returned to anyone
+            who asks. Charging per call later is just routing those receipts
+            into any payment rail; you never write a billing layer.
+          </p>
+        </div>
       </div>
     </section>
   )
